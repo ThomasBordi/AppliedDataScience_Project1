@@ -1,0 +1,13 @@
+praw
+pandas
+numpy
+seaborn
+matplotlib
+nltk
+vaderSentiment
+transformers
+torch
+yfinance
+scikit-learn
+re
+requests
