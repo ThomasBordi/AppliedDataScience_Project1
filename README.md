@@ -1,4 +1,6 @@
-# **AppliedDataScience_Project 1: Financial Sentiment Analysis with Reddit data & Data Processing**
+# **AppliedDataScience_Project 1**
+# **Financial Sentiment Analysis with Reddit data & Data Processing**
+>>>>>>> Stashed changes
 
 ## **Project Overview**
 This project focuses on acquiring, cleaning, preprocessing, and analyzing financial text data for sentiment analysis and exploratory data analysis (EDA). The dataset is collected from **Reddit cryptocurrency discussions** using the **Reddit API**. The final deliverable includes processed datasets, code for data pipeline, exploratory insights, and feature engineering for further predictive modeling.
