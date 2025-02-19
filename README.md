@@ -4,7 +4,7 @@
 ## **Project Overview**
 This project focuses on acquiring, cleaning, preprocessing, and analyzing financial text data for sentiment analysis and exploratory data analysis (EDA). The dataset is collected from Reddit cryptocurrency discussions using the Reddit API. The final deliverable includes processed datasets, code for data pipeline, exploratory insights, and feature engineering for further predictive modeling.
 
-## **📂 Project Structure**
+## **Project Structure**
 ```
 ├── data_pipeline.ipynb       # Jupyter Notebook for data acquisition, cleaning, and processing
 ├── csv_bitcoin_1000.csv      # Reddit dataset acquired from Reddit API
@@ -17,8 +17,8 @@ This project focuses on acquiring, cleaning, preprocessing, and analyzing financ
 
 ---
 
-## **🔹 Data Acquisition**
-### **✅ Source: Reddit API**
+## **Data Acquisition**
+### **Source: Reddit API**
 - Data is fetched from the **r/cryptocurrency** subreddit.
 - **`praw`** library is used to extract posts mentioning Bitcoin.
 - Extracted features:
@@ -29,7 +29,7 @@ This project focuses on acquiring, cleaning, preprocessing, and analyzing financ
   - **Timestamp**: UNIX timestamp of post creation
   - **URL**: Link to the original post
 
-### **📜 How to Fetch Data**
+### **How to Fetch Data**
 Ensure you have **Reddit API credentials** set up before running the script.
 ```bash
 pip install praw
@@ -38,23 +38,23 @@ python data_pipeline.ipynb
 
 ---
 
-## **🔹 Data Cleaning & Preprocessing**
-### **✅ Cleaning Steps**
+## **Data Cleaning & Preprocessing**
+### **Cleaning Steps**
 - **Standardizing column names** (lowercase, removing spaces)
 - **Removing special characters & URLs** from text
 - **Handling missing values** (filling NaN in `content` with "No content")
 - **Dropping duplicates** based on **URL & Title**
 - **Converting timestamps** to datetime format
 
-### **🔹 Exploratory Data Analysis (EDA)**
+### **Exploratory Data Analysis (EDA)**
 - **Visualizing upvotes & comments distribution**
 - **Checking correlation between engagement & text feature**
 - **Time-series analysis of Bitcoin-related discussions**
 
 ---
 
-## **🔹 Data Preprocessing & Feature Engineering**
-### **✅ Added Features**
+## **Data Preprocessing & Feature Engineering**
+### **Added Features**
 | Feature | Description |
 |---------|-------------|
 | `log_upvotes` | Log transformation of upvotes because of right skewed distribution |
@@ -68,14 +68,14 @@ python data_pipeline.ipynb
 
 ---
 
-## **🔹 Running the Project**
-### **📦 Install Dependencies**
+## **Running the Project**
+### **Install Dependencies**
 Ensure you have the required Python packages installed:
 ```bash
 pip install -r requirements.txt
 ```
 
-### **🚀 Running Data Pipeline**
+### **Running Data Pipeline**
 ```bash
 jupyter notebook data_pipeline.ipynb
 ```
