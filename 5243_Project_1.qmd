@@ -109,9 +109,11 @@ def preprocess_data(df):
 
 ## **Key Insights from Visualizations**
 
--   **Upvotes & comments have a right-skewed distribution.**
--   **Weekday vs. Weekend engagement shows higher upvotes on weekends.**
--   **Correlation between upvotes and comments is positive.**
+- Upvotes and comments follow a right-skewed distribution, meaning most posts receive relatively low engagement, while a few highly popular posts accumulate significantly more interactions. This suggests that engagement is unevenly distributed, with viral content driving a large share of the activity.
+
+- Engagement differs between weekdays and weekends, with upvotes tending to be higher on weekends. This could be due to users having more free time to browse and interact with posts, leading to increased visibility and participation in discussions.
+
+- There is a positive correlation between upvotes and comments, indicating that posts receiving more upvotes also tend to generate more discussion. This suggests that highly engaging content not only attracts approval but also encourages further conversation within the community.
 
 ## **Visualization: Upvotes Distribution**
 
