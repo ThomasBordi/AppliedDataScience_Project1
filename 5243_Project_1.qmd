@@ -16,6 +16,8 @@ execute:
 
 This project aims to analyze sentiment trends in Reddit cryptocurrency discussions. The goal is to collect, clean, preprocess, and analyze textual and numerical data from Reddit posts, focusing on Bitcoin-related discussions. The final analysis highlights patterns in engagement metrics (upvotes, comments) and explores their relationship with sentiment and time-based features.
 
+The methodology is designed to be easily adaptable for any cryptocurrency, making it highly relevant for various applications, including trend prediction and even in-game trading strategies. By modifying the focus to different coins, the approach can be extended to analyze sentiment dynamics across multiple assets, offering valuable insights for traders and investors. The integration of sentiment analysis with engagement metrics allows for the development of predictive models that can inform trading strategies or game-based economic simulations. This adaptability ensures that the project remains a versatile tool for both market analysis and interactive financial applications.
+
 ## **Data Source**
 
 The data is collected from the **r/cryptocurrency** subreddit using the **Reddit API (praw)**. The dataset contains metadata, including: - **Post Title & Content** - **Upvotes & Comments** - **Post Creation Time** - **Post URL**
@@ -153,14 +155,16 @@ plt.show()
 
 ## **Findings**
 
--   **Sentiment polarity influences engagement (higher upvotes for positive sentiment).**
--   **Posts with "Bitcoin" in the title tend to receive higher upvotes.**
--   **Weekends show higher engagement.**
+Sentiment polarity plays a crucial role in driving engagement on Reddit. Posts with a more positive sentiment tend to receive higher upvotes, suggesting that users are more likely to engage with optimistic or bullish discussions. This indicates that sentiment not only reflects market mood but also directly influences how widely content is shared and supported within the community.
+
+Posts that include "Bitcoin" in the title tend to attract more upvotes, likely because Bitcoin remains the most recognized and influential cryptocurrency. This suggests that discussions explicitly mentioning Bitcoin are perceived as more relevant or valuable, drawing greater attention from the community. The effect may also be linked to algorithmic promotion, as posts with trending keywords like "Bitcoin" are more likely to be surfaced to users.
+
+Engagement levels tend to be higher on weekends, possibly because users have more free time to browse and interact with cryptocurrency discussions. This pattern suggests that sentiment analysis and trading strategies could benefit from factoring in time-based trends, as increased activity during weekends may amplify sentiment-driven market reactions.
 
 ## **Next Steps**
 
--   **Apply NLP techniques (TF-IDF, LLM sentiment analysis).**
--   **Build predictive models for Bitcoin price movement based on Reddit sentiment.**
--   **Experiment with fine-tuned LLMs for finance-specific sentiment classification.**
+-   NLP techniques like TF-IDF and LLM-based sentiment analysis help extract meaningful insights from Reddit discussions, identifying key terms and sentiment trends.
+-   Predictive models can be built to analyze the relationship between Reddit sentiment and Bitcoin price movements, potentially aiding in market forecasting.
+-   Fine-tuning LLMs for finance-specific sentiment classification can improve accuracy, making sentiment analysis more relevant for trading and investment strategies.
 
 **This report summarizes the entire process, from data collection to analysis. The next phase will explore predictive modeling using the cleaned dataset.**
