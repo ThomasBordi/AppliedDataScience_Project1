@@ -65,6 +65,7 @@ python data_pipeline.ipynb
 | `engagement_score` | Weighted score of upvotes & comments |
 | `upvote_to_comment_ratio` | Ratio of upvotes to comments |
 | `has_bitcoin` | Whether "Bitcoin" appears in the title |
+| `TF-IDF Futures` | Using TF-IDF processing the title variable |
 
 ---
 
