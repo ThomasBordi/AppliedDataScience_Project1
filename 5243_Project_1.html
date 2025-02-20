@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Wenbo Liu (wl2939)">
+<meta name="author" content="Wenbo Liu (wl2939), Lilly Loghmani (lql2103), Yixin Xiao, Thomas Bordino">
 <meta name="dcterms.date" content="2025-02-19">
 
 <title>Project Report: Reddit Cryptocurrency Sentiment Analysis</title>
@@ -91,7 +91,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Wenbo Liu (wl2939) </p>
+             <p>Wenbo Liu (wl2939), Lilly Loghmani (lql2103), Yixin Xiao, Thomas Bordino </p>
           </div>
   </div>
     
@@ -115,6 +115,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="project-overview" class="level2">
 <h2 class="anchored" data-anchor-id="project-overview"><strong>Project Overview</strong></h2>
 <p>This project aims to analyze sentiment trends in Reddit cryptocurrency discussions. The goal is to collect, clean, preprocess, and analyze textual and numerical data from Reddit posts, focusing on Bitcoin-related discussions. The final analysis highlights patterns in engagement metrics (upvotes, comments) and explores their relationship with sentiment and time-based features.</p>
+<p>The methodology is designed to be easily adaptable for any cryptocurrency, making it highly relevant for various applications, including trend prediction and even in-game trading strategies. By modifying the focus to different coins, the approach can be extended to analyze sentiment dynamics across multiple assets, offering valuable insights for traders and investors. The integration of sentiment analysis with engagement metrics allows for the development of predictive models that can inform trading strategies or game-based economic simulations. This adaptability ensures that the project remains a versatile tool for both market analysis and interactive financial applications.</p>
 </section>
 <section id="data-source" class="level2">
 <h2 class="anchored" data-anchor-id="data-source"><strong>Data Source</strong></h2>
@@ -130,7 +131,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="code-implementation" class="level2">
 <h2 class="anchored" data-anchor-id="code-implementation"><strong>Code Implementation</strong></h2>
-<div id="273259a4" class="cell" data-execution_count="1">
+<div id="e1bba970" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> praw</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -193,7 +194,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Handle missing values (<code>content</code> field filled with “No content”)</strong></li>
 <li><strong>Remove duplicate posts based on URLs</strong></li>
 </ul>
-<div id="6d344d31" class="cell" data-execution_count="2">
+<div id="9f7f4c33" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> clean_reddit_data(df):</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df.copy()</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    df.columns <span class="op">=</span> df.columns.<span class="bu">str</span>.lower().<span class="bu">str</span>.replace(<span class="st">" "</span>, <span class="st">"_"</span>)</span>
@@ -210,7 +211,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Extract time-based features (Hour, Day, Weekend Flag)</strong></li>
 <li><strong>Categorical encoding for <code>content</code></strong></li>
 </ul>
-<div id="54232876" class="cell" data-execution_count="3">
+<div id="579a06ae" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -233,14 +234,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="key-insights-from-visualizations" class="level2">
 <h2 class="anchored" data-anchor-id="key-insights-from-visualizations"><strong>Key Insights from Visualizations</strong></h2>
 <ul>
-<li><strong>Upvotes &amp; comments have a right-skewed distribution.</strong></li>
-<li><strong>Weekday vs.&nbsp;Weekend engagement shows higher upvotes on weekends.</strong></li>
-<li><strong>Correlation between upvotes and comments is positive.</strong></li>
+<li><p>Upvotes and comments follow a right-skewed distribution, meaning most posts receive relatively low engagement, while a few highly popular posts accumulate significantly more interactions. This suggests that engagement is unevenly distributed, with viral content driving a large share of the activity.</p></li>
+<li><p>Engagement differs between weekdays and weekends, with upvotes tending to be higher on weekends. This could be due to users having more free time to browse and interact with posts, leading to increased visibility and participation in discussions.</p></li>
+<li><p>There is a positive correlation between upvotes and comments, indicating that posts receiving more upvotes also tend to generate more discussion. This suggests that highly engaging content not only attracts approval but also encourages further conversation within the community.</p></li>
 </ul>
 </section>
 <section id="visualization-upvotes-distribution" class="level2">
 <h2 class="anchored" data-anchor-id="visualization-upvotes-distribution"><strong>Visualization: Upvotes Distribution</strong></h2>
-<div id="2f5c96bb" class="cell" data-execution_count="4">
+<div id="a97b890b" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -248,14 +249,57 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Distribution of Upvotes"</span>)</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p><img src="Distribution_upvotes.png" class="img-fluid"></p>
+</section>
+<section id="visualization-comments-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="visualization-comments-distribution"><strong>Visualization: Comments Distribution</strong></h2>
+<div id="4fb0cfb1" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>sns.histplot(df[<span class="st">'comments'</span>], bins<span class="op">=</span><span class="dv">30</span>, kde<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span><span class="st">'blue'</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Distribution of Comments"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="Distribution_comments.png" class="img-fluid"></p>
+</section>
+<section id="visualization-comments-and-upvotes" class="level2">
+<h2 class="anchored" data-anchor-id="visualization-comments-and-upvotes"><strong>Visualization: Comments And Upvotes</strong></h2>
+<div id="98a4c3c8" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'upvotes'</span>, y<span class="op">=</span><span class="st">'comments'</span>, data<span class="op">=</span>df, color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Upvotes vs. Comments"</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="comments_upvotes.png" class="img-fluid"></p>
 </section>
 <section id="visualization-correlation-heatmap" class="level2">
 <h2 class="anchored" data-anchor-id="visualization-correlation-heatmap"><strong>Visualization: Correlation Heatmap</strong></h2>
-<div id="cf0812d8" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>sns.heatmap(df.corr(numeric_only<span class="op">=</span><span class="va">True</span>), annot<span class="op">=</span><span class="va">True</span>, cmap<span class="op">=</span><span class="st">'coolwarm'</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Correlation Matrix"</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="b8558083" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sns.heatmap(df.corr(numeric_only<span class="op">=</span><span class="va">True</span>), annot<span class="op">=</span><span class="va">True</span>, cmap<span class="op">=</span><span class="st">'coolwarm'</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Correlation Matrix"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p><img src="corr.png" class="img-fluid"></p>
+</section>
+<section id="visualization-upvotes-over-time" class="level2">
+<h2 class="anchored" data-anchor-id="visualization-upvotes-over-time"><strong>Visualization: Upvotes over Time</strong></h2>
+<div id="30a94e7d" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'timestamp'</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">'timestamp'</span>])</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'date'</span>] <span class="op">=</span> df[<span class="st">'timestamp'</span>].dt.date</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>df.groupby(<span class="st">'date'</span>)[<span class="st">'upvotes'</span>].<span class="bu">sum</span>().plot(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Total Upvotes Over Time"</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Date"</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Total Upvotes"</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="upvotes_time.png" class="img-fluid"></p>
 <hr>
 </section>
 </section>
@@ -310,24 +354,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <hr>
+<p><img src="dist_engage.png" class="img-fluid"> <img src="engage_day.png" class="img-fluid"> <img src="corr_engage.png" class="img-fluid"></p>
 </section>
 </section>
 <section id="conclusion-future-work" class="level1">
 <h1><strong>6. Conclusion &amp; Future Work</strong></h1>
 <section id="findings" class="level2">
 <h2 class="anchored" data-anchor-id="findings"><strong>Findings</strong></h2>
-<ul>
-<li><strong>Sentiment polarity influences engagement (higher upvotes for positive sentiment).</strong></li>
-<li><strong>Posts with “Bitcoin” in the title tend to receive higher upvotes.</strong></li>
-<li><strong>Weekends show higher engagement.</strong></li>
-</ul>
+<p>Sentiment polarity plays a crucial role in driving engagement on Reddit. Posts with a more positive sentiment tend to receive higher upvotes, suggesting that users are more likely to engage with optimistic or bullish discussions. This indicates that sentiment not only reflects market mood but also directly influences how widely content is shared and supported within the community.</p>
+<p>Posts that include “Bitcoin” in the title tend to attract more upvotes, likely because Bitcoin remains the most recognized and influential cryptocurrency. This suggests that discussions explicitly mentioning Bitcoin are perceived as more relevant or valuable, drawing greater attention from the community. The effect may also be linked to algorithmic promotion, as posts with trending keywords like “Bitcoin” are more likely to be surfaced to users.</p>
+<p>Engagement levels tend to be higher on weekends, possibly because users have more free time to browse and interact with cryptocurrency discussions. This pattern suggests that sentiment analysis and trading strategies could benefit from factoring in time-based trends, as increased activity during weekends may amplify sentiment-driven market reactions.</p>
 </section>
 <section id="next-steps" class="level2">
 <h2 class="anchored" data-anchor-id="next-steps"><strong>Next Steps</strong></h2>
 <ul>
-<li><strong>Apply NLP techniques (TF-IDF, LLM sentiment analysis).</strong></li>
-<li><strong>Build predictive models for Bitcoin price movement based on Reddit sentiment.</strong></li>
-<li><strong>Experiment with fine-tuned LLMs for finance-specific sentiment classification.</strong></li>
+<li>NLP techniques like TF-IDF and LLM-based sentiment analysis help extract meaningful insights from Reddit discussions, identifying key terms and sentiment trends.</li>
+<li>Predictive models can be built to analyze the relationship between Reddit sentiment and Bitcoin price movements, potentially aiding in market forecasting.</li>
+<li>Fine-tuning LLMs for finance-specific sentiment classification can improve accuracy, making sentiment analysis more relevant for trading and investment strategies.</li>
 </ul>
 <p><strong>This report summarizes the entire process, from data collection to analysis. The next phase will explore predictive modeling using the cleaned dataset.</strong></p>
 </section>
