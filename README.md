@@ -9,7 +9,7 @@ This project focuses on acquiring, cleaning, preprocessing, and analyzing financ
 ├── data_pipeline.ipynb       # Jupyter Notebook for data acquisition, cleaning, and processing
 ├── csv_bitcoin_1000.csv      # Reddit dataset acquired from Reddit API
 ├── csv_clean_bitcoin_1000.csv  # Cleaned dataset after preprocessing
-├── csv_feature_engineered_bitcoin_1000.csv  # Feature-engineered dataset
+├── csv_feature_engineered_bitcoin_1000.csv  # Feature-engineered dataset by using TF-IDF and several steps
 ├── Project_Report.pdf         # Final report summarizing methodology & insights
 ├── README.md                  # Project documentation
 ├── requirement.txt           # Packages requirement
@@ -38,7 +38,7 @@ python data_pipeline.ipynb
 
 ---
 
-## **Data Cleaning & Preprocessing**
+## **Data Cleaning & EDA**
 ### **Cleaning Steps**
 - **Standardizing column names** (lowercase, removing spaces)
 - **Removing special characters & URLs** from text
@@ -57,6 +57,7 @@ python data_pipeline.ipynb
 ### **Added Features**
 | Feature | Description |
 |---------|-------------|
+| `TF-IDF Futures` | Using TF-IDF processing the title variable |
 | `log_upvotes` | Log transformation of upvotes because of right skewed distribution |
 | `log_comments` | Log transformation of comments because of right skewed distribution |
 | `title_len` | Number of words in the post title |
@@ -65,7 +66,6 @@ python data_pipeline.ipynb
 | `engagement_score` | Weighted score of upvotes & comments |
 | `upvote_to_comment_ratio` | Ratio of upvotes to comments |
 | `has_bitcoin` | Whether "Bitcoin" appears in the title |
-| `TF-IDF Futures` | Using TF-IDF processing the title variable |
 
 ---
 
