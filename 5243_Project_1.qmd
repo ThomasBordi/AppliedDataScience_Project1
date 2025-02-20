@@ -1,6 +1,6 @@
 ---
 title: "Project Report: Reddit Cryptocurrency Sentiment Analysis"
-author: "Wenbo Liu (wl2939)"
+author: "Wenbo Liu (wl2939), Lilly Loghmani (lql2103), Yixin Xiao, Thomas Bordino"
 date: "2025/2/19"
 format: html
 execute:
@@ -126,6 +126,36 @@ plt.title("Distribution of Upvotes")
 plt.show()
 ```
 
+![](Distribution_upvotes.png)
+
+## **Visualization: Comments Distribution**
+
+```{python}
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+sns.histplot(df['comments'], bins=30, kde=True, color='blue')
+plt.title("Distribution of Comments")
+plt.show()
+```
+
+![](Distribution_comments.png)
+
+
+## **Visualization: Comments And Upvotes**
+
+```{python}
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+sns.scatterplot(x='upvotes', y='comments', data=df, color='red')
+plt.title("Upvotes vs. Comments")
+plt.show()
+```
+
+![](comments_upvotes.png)
+
+
 ## **Visualization: Correlation Heatmap**
 
 ```{python}
@@ -133,6 +163,27 @@ sns.heatmap(df.corr(numeric_only=True), annot=True, cmap='coolwarm')
 plt.title("Correlation Matrix")
 plt.show()
 ```
+
+![](corr.png)
+
+## **Visualization: Upvotes over Time**
+
+```{python}
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+df['timestamp'] = pd.to_datetime(df['timestamp'])
+df['date'] = df['timestamp'].dt.date
+df.groupby('date')['upvotes'].sum().plot(figsize=(10, 5))
+plt.title("Total Upvotes Over Time")
+plt.xlabel("Date")
+plt.ylabel("Total Upvotes")
+plt.xticks(rotation=45)
+plt.show()
+```
+
+![](upvotes_time.png)
+
 
 ------------------------------------------------------------------------
 
@@ -152,6 +203,10 @@ plt.show()
 | `has_bitcoin`             | Whether "Bitcoin" appears in the title                              |
 
 ------------------------------------------------------------------------
+![](dist_engage.png)
+![](engage_day.png)
+![](corr_engage.png)
+
 
 # **6. Conclusion & Future Work**
 

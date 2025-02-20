@@ -72,7 +72,7 @@ python data_pipeline.ipynb
 ### **Install Dependencies**
 Ensure you have the required Python packages installed:
 ```bash
-pip install -r requirements.txt
+pip install -r requirement.txt
 ```
 
 ### **Running Data Pipeline**
