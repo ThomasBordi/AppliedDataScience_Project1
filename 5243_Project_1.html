@@ -112,6 +112,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introduction" class="level1">
 <h1><strong>1. Introduction</strong></h1>
+<section id="github-repository" class="level2">
+<h2 class="anchored" data-anchor-id="github-repository"><strong>GitHub Repository</strong></h2>
+<p>The full project code, dataset, and report can be accessed at:<br>
+<a href="https://github.com/ThomasBordi/AppliedDataScience_Project1">GitHub Repository Link</a></p>
+</section>
 <section id="project-overview" class="level2">
 <h2 class="anchored" data-anchor-id="project-overview"><strong>Project Overview</strong></h2>
 <p>This project aims to analyze sentiment trends in Reddit cryptocurrency discussions. The goal is to collect, clean, preprocess, and analyze textual and numerical data from Reddit posts, focusing on Bitcoin-related discussions. The final analysis highlights patterns in engagement metrics (upvotes, comments) and explores their relationship with sentiment and time-based features.</p>
@@ -119,7 +124,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="data-source" class="level2">
 <h2 class="anchored" data-anchor-id="data-source"><strong>Data Source</strong></h2>
-<p>The data is collected from the <strong>r/cryptocurrency</strong> subreddit using the <strong>Reddit API (praw)</strong>. The dataset contains metadata, including: - <strong>Post Title &amp; Content</strong> - <strong>Upvotes &amp; Comments</strong> - <strong>Post Creation Time</strong> - <strong>Post URL</strong></p>
+<p>The data is collected from the <strong>r/cryptocurrency</strong> subreddit using the <strong>Reddit API (praw)</strong>. We fetched posts mentioning Bitcoin and extracted key metadata including:</p>
+<ul>
+<li><strong>Post Title &amp; Content</strong></li>
+<li><strong>Upvotes &amp; Comments</strong></li>
+<li><strong>Post Creation Time (UNIX Timestamp)</strong></li>
+<li><strong>Post URL</strong></li>
+</ul>
 <hr>
 </section>
 </section>
@@ -131,7 +142,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="code-implementation" class="level2">
 <h2 class="anchored" data-anchor-id="code-implementation"><strong>Code Implementation</strong></h2>
-<div id="e1bba970" class="cell" data-execution_count="1">
+<div id="1bd4e23d" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> praw</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -188,13 +199,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1><strong>3. Data Cleaning &amp; Preprocessing</strong></h1>
 <section id="cleaning-steps" class="level2">
 <h2 class="anchored" data-anchor-id="cleaning-steps"><strong>Cleaning Steps</strong></h2>
+<p>Before analysis, the raw data required significant cleaning:</p>
 <ul>
-<li><strong>Convert timestamps to datetime format</strong></li>
-<li><strong>Remove special characters &amp; URLs</strong> from text</li>
-<li><strong>Handle missing values (<code>content</code> field filled with “No content”)</strong></li>
-<li><strong>Remove duplicate posts based on URLs</strong></li>
+<li><strong>Removing special characters &amp; URLs</strong> from text fields.</li>
+<li><strong>Handling missing values</strong> (replacing NaN values in <code>content</code> with “No Content”).</li>
+<li><strong>Dropping duplicates</strong> based on post <code>URL</code>.</li>
+<li><strong>Converting timestamps</strong> from UNIX format to a human-readable datetime format.</li>
 </ul>
-<div id="9f7f4c33" class="cell" data-execution_count="2">
+<div id="ae9b2df4" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> clean_reddit_data(df):</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df.copy()</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    df.columns <span class="op">=</span> df.columns.<span class="bu">str</span>.lower().<span class="bu">str</span>.replace(<span class="st">" "</span>, <span class="st">"_"</span>)</span>
@@ -211,7 +223,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Extract time-based features (Hour, Day, Weekend Flag)</strong></li>
 <li><strong>Categorical encoding for <code>content</code></strong></li>
 </ul>
-<div id="579a06ae" class="cell" data-execution_count="3">
+<div id="2c1ad54c" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -238,10 +250,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Engagement differs between weekdays and weekends, with upvotes tending to be higher on weekends. This could be due to users having more free time to browse and interact with posts, leading to increased visibility and participation in discussions.</p></li>
 <li><p>There is a positive correlation between upvotes and comments, indicating that posts receiving more upvotes also tend to generate more discussion. This suggests that highly engaging content not only attracts approval but also encourages further conversation within the community.</p></li>
 </ul>
-</section>
-<section id="visualization-upvotes-distribution" class="level2">
-<h2 class="anchored" data-anchor-id="visualization-upvotes-distribution"><strong>Visualization: Upvotes Distribution</strong></h2>
-<div id="a97b890b" class="cell" data-execution_count="4">
+<section id="visualization-upvotes-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="visualization-upvotes-distribution"><strong>(1)Visualization: Upvotes Distribution</strong></h3>
+<div id="b2d750c7" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -251,9 +262,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><img src="Distribution_upvotes.png" class="img-fluid"></p>
 </section>
-<section id="visualization-comments-distribution" class="level2">
-<h2 class="anchored" data-anchor-id="visualization-comments-distribution"><strong>Visualization: Comments Distribution</strong></h2>
-<div id="4fb0cfb1" class="cell" data-execution_count="5">
+<section id="visualization-comments-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="visualization-comments-distribution"><strong>(2)Visualization: Comments Distribution</strong></h3>
+<div id="4060c16b" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -263,9 +274,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><img src="Distribution_comments.png" class="img-fluid"></p>
 </section>
-<section id="visualization-comments-and-upvotes" class="level2">
-<h2 class="anchored" data-anchor-id="visualization-comments-and-upvotes"><strong>Visualization: Comments And Upvotes</strong></h2>
-<div id="98a4c3c8" class="cell" data-execution_count="6">
+<section id="visualization-comments-and-upvotes" class="level3">
+<h3 class="anchored" data-anchor-id="visualization-comments-and-upvotes"><strong>(3)Visualization: Comments And Upvotes</strong></h3>
+<div id="70d11b68" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -275,18 +286,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><img src="comments_upvotes.png" class="img-fluid"></p>
 </section>
-<section id="visualization-correlation-heatmap" class="level2">
-<h2 class="anchored" data-anchor-id="visualization-correlation-heatmap"><strong>Visualization: Correlation Heatmap</strong></h2>
-<div id="b8558083" class="cell" data-execution_count="7">
+<section id="visualization-correlation-heatmap" class="level3">
+<h3 class="anchored" data-anchor-id="visualization-correlation-heatmap"><strong>(4)Visualization: Correlation Heatmap</strong></h3>
+<div id="ade8d01f" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sns.heatmap(df.corr(numeric_only<span class="op">=</span><span class="va">True</span>), annot<span class="op">=</span><span class="va">True</span>, cmap<span class="op">=</span><span class="st">'coolwarm'</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Correlation Matrix"</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img src="corr.png" class="img-fluid"></p>
 </section>
-<section id="visualization-upvotes-over-time" class="level2">
-<h2 class="anchored" data-anchor-id="visualization-upvotes-over-time"><strong>Visualization: Upvotes over Time</strong></h2>
-<div id="30a94e7d" class="cell" data-execution_count="8">
+<section id="visualization-upvotes-over-time" class="level3">
+<h3 class="anchored" data-anchor-id="visualization-upvotes-over-time"><strong>(5)Visualization: Upvotes over Time</strong></h3>
+<div id="3b4b4bf3" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -303,8 +314,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
+</section>
 <section id="feature-engineering" class="level1">
 <h1><strong>5. Feature Engineering</strong></h1>
+<p>We engineered several new features to enhance our analysis:</p>
 <section id="added-features" class="level2">
 <h2 class="anchored" data-anchor-id="added-features"><strong>Added Features</strong></h2>
 <table class="caption-top table">
@@ -354,26 +367,71 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <hr>
-<p><img src="dist_engage.png" class="img-fluid"> <img src="engage_day.png" class="img-fluid"> <img src="corr_engage.png" class="img-fluid"></p>
+<section id="visualization-engagement-score-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="visualization-engagement-score-distribution"><strong>(6)Visualization: Engagement Score Distribution</strong></h3>
+<p><img src="dist_engage.png" class="img-fluid"></p>
 </section>
+<section id="visualization-engagement-score-day-of-week" class="level3">
+<h3 class="anchored" data-anchor-id="visualization-engagement-score-day-of-week"><strong>(7)Visualization: Engagement Score &amp; Day of Week</strong></h3>
+<p><img src="engage_day.png" class="img-fluid"></p>
+</section>
+<section id="visualization-correlation-matrix-of-engagement-score-title-content" class="level3">
+<h3 class="anchored" data-anchor-id="visualization-correlation-matrix-of-engagement-score-title-content"><strong>(8)Visualization: Correlation Matrix of Engagement Score &amp; Title &amp; Content</strong></h3>
+<p><img src="corr_engage.png" class="img-fluid"></p>
+<hr>
+</section>
+</section>
+</section>
+<section id="challenges-solutions" class="level1">
+<h1><strong>6. Challenges &amp; Solutions</strong></h1>
+<p>Throughout this project, we encountered several challenges that required careful consideration:</p>
+<ul>
+<li><strong>Data Cleaning Complexity:</strong> The textual data contained significant noise, special characters, URLs, and inconsistencies. We developed robust cleaning functions to handle these issues effectively, including removing special characters, URLs, and filling missing values in the <code>content</code> field.</li>
+<li><strong>Feature Engineering Complexity:</strong> Handling the right-skewed distributions of <code>upvotes</code> and <code>comments</code> was another challenge. To address this, we applied log transformations to these features, creating <code>log_upvotes</code> and <code>log_comments</code>, which helped normalize the distributions.</li>
+<li><strong>API Rate Limits:</strong> We encountered rate limits when fetching large amounts of data. We solved this by implementing <strong>request delays</strong>.</li>
+<li><strong>Missing Values in Content:</strong> Some Reddit posts had missing content fields. We imputed missing values with “No Content”.</li>
+<li><strong>Feature Scaling Choice:</strong> Log transformation was chosen for <code>upvotes</code> and <code>comments</code> because they were <strong>highly skewed</strong>.</li>
+<li><strong>Collaboration and Integration:</strong> Coordinating the efforts of multiple team members, integrating their individual contributions, and ensuring consistency across the project required careful communication and collaboration.</li>
+</ul>
+<hr>
 </section>
 <section id="conclusion-future-work" class="level1">
-<h1><strong>6. Conclusion &amp; Future Work</strong></h1>
-<section id="findings" class="level2">
-<h2 class="anchored" data-anchor-id="findings"><strong>Findings</strong></h2>
-<p>Sentiment polarity plays a crucial role in driving engagement on Reddit. Posts with a more positive sentiment tend to receive higher upvotes, suggesting that users are more likely to engage with optimistic or bullish discussions. This indicates that sentiment not only reflects market mood but also directly influences how widely content is shared and supported within the community.</p>
-<p>Posts that include “Bitcoin” in the title tend to attract more upvotes, likely because Bitcoin remains the most recognized and influential cryptocurrency. This suggests that discussions explicitly mentioning Bitcoin are perceived as more relevant or valuable, drawing greater attention from the community. The effect may also be linked to algorithmic promotion, as posts with trending keywords like “Bitcoin” are more likely to be surfaced to users.</p>
-<p>Engagement levels tend to be higher on weekends, possibly because users have more free time to browse and interact with cryptocurrency discussions. This pattern suggests that sentiment analysis and trading strategies could benefit from factoring in time-based trends, as increased activity during weekends may amplify sentiment-driven market reactions.</p>
-</section>
-<section id="next-steps" class="level2">
-<h2 class="anchored" data-anchor-id="next-steps"><strong>Next Steps</strong></h2>
+<h1><strong>7. Conclusion &amp; Future Work</strong></h1>
+<section id="summary-of-key-findings" class="level2">
+<h2 class="anchored" data-anchor-id="summary-of-key-findings"><strong>Summary of Key Findings</strong></h2>
 <ul>
-<li>NLP techniques like TF-IDF and LLM-based sentiment analysis help extract meaningful insights from Reddit discussions, identifying key terms and sentiment trends.</li>
-<li>Predictive models can be built to analyze the relationship between Reddit sentiment and Bitcoin price movements, potentially aiding in market forecasting.</li>
-<li>Fine-tuning LLMs for finance-specific sentiment classification can improve accuracy, making sentiment analysis more relevant for trading and investment strategies.</li>
+<li>Posts mentioning <strong>“Bitcoin”</strong> received <strong>more upvotes</strong> and engagement.</li>
+<li>Engagement was <strong>higher on weekends</strong> than weekdays.</li>
+<li>There was a <strong>strong correlation between upvotes and comments</strong>, suggesting highly engaged posts get more interactions.</li>
+<li>The sentiment of posts appears to have a <strong>positive effect</strong> on engagement.</li>
 </ul>
-<p><strong>This report summarizes the entire process, from data collection to analysis. The next phase will explore predictive modeling using the cleaned dataset.</strong></p>
 </section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion"><strong>Conclusion</strong></h2>
+<ul>
+<li><p>Sentiment polarity plays a crucial role in driving engagement on Reddit. Posts with a more positive sentiment tend to receive higher upvotes, suggesting that users are more likely to engage with optimistic or bullish discussions. This indicates that sentiment not only reflects market mood but also directly influences how widely content is shared and supported within the community.</p></li>
+<li><p>Posts that include “Bitcoin” in the title tend to attract more upvotes, likely because Bitcoin remains the most recognized and influential cryptocurrency. This suggests that discussions explicitly mentioning Bitcoin are perceived as more relevant or valuable, drawing greater attention from the community. The effect may also be linked to algorithmic promotion, as posts with trending keywords like “Bitcoin” are more likely to be surfaced to users.</p></li>
+<li><p>Engagement levels tend to be higher on weekends, possibly because users have more free time to browse and interact with cryptocurrency discussions. This pattern suggests that sentiment analysis and trading strategies could benefit from factoring in time-based trends, as increased activity during weekends may amplify sentiment-driven market reactions.</p></li>
+</ul>
+</section>
+<section id="future-work" class="level2">
+<h2 class="anchored" data-anchor-id="future-work"><strong>Future Work</strong></h2>
+<ul>
+<li>NLP techniques like <strong>LLM-based</strong> sentiment analysis help extract meaningful insights from Reddit discussions, identifying key terms and sentiment trends.</li>
+<li><strong>Predictive models</strong> can be built to analyze the relationship between Reddit sentiment and Bitcoin price movements, potentially aiding in market forecasting.</li>
+<li><strong>Fine-tuning LLMs</strong> for finance-specific sentiment classification can improve accuracy, making sentiment analysis more relevant for trading and investment strategies.</li>
+</ul>
+</section>
+</section>
+<section id="team-contributions" class="level1">
+<h1><strong>8.Team Contributions</strong></h1>
+<p>This project was a collaborative effort, with each member playing a crucial role in its success.</p>
+<ul>
+<li><strong>Thomas Bordino</strong> initiated the project by acquiring the initial dataset, performing basic data cleaning, and conducting preliminary exploratory data analysis (EDA) to understand the data’s structure and characteristics.</li>
+<li><strong>Yixin Xiao</strong> significantly enhanced the data cleaning process, refining EDA, data preprocessing, and feature engineering, laying the groundwork for subsequent analysis.</li>
+<li><strong>Lilly Loghmani</strong> further refined the data preprocessing steps, completed the EDA, and played a key role in feature engineering, creating new variables to improve the analysis.</li>
+<li><strong>Wenbo Liu</strong> played a crucial role in finalizing the project by refining the remaining details of the initial code base and contributing across multiple elements. He took the lead in writing the README and the final report, as well as writing most of them.</li>
+</ul>
 </section>
 
 </main>

@@ -12,6 +12,11 @@ execute:
 
 # **1. Introduction**
 
+## **GitHub Repository**
+
+The full project code, dataset, and report can be accessed at:  
+[GitHub Repository Link](https://github.com/ThomasBordi/AppliedDataScience_Project1)
+
 ## **Project Overview**
 
 This project aims to analyze sentiment trends in Reddit cryptocurrency discussions. The goal is to collect, clean, preprocess, and analyze textual and numerical data from Reddit posts, focusing on Bitcoin-related discussions. The final analysis highlights patterns in engagement metrics (upvotes, comments) and explores their relationship with sentiment and time-based features.
@@ -20,7 +25,12 @@ The methodology is designed to be easily adaptable for any cryptocurrency, makin
 
 ## **Data Source**
 
-The data is collected from the **r/cryptocurrency** subreddit using the **Reddit API (praw)**. The dataset contains metadata, including: - **Post Title & Content** - **Upvotes & Comments** - **Post Creation Time** - **Post URL**
+The data is collected from the **r/cryptocurrency** subreddit using the **Reddit API (praw)**. We fetched posts mentioning Bitcoin and extracted key metadata including:
+
+- **Post Title & Content**
+- **Upvotes & Comments**
+- **Post Creation Time (UNIX Timestamp)**
+- **Post URL**
 
 ------------------------------------------------------------------------
 
@@ -65,11 +75,13 @@ def fetch_reddit_posts(coin, num_posts):
 # **3. Data Cleaning & Preprocessing**
 
 ## **Cleaning Steps**
+Before analysis, the raw data required significant cleaning:
 
--   **Convert timestamps to datetime format**
--   **Remove special characters & URLs** from text
--   **Handle missing values (`content` field filled with "No content")**
--   **Remove duplicate posts based on URLs**
+- **Removing special characters & URLs** from text fields.
+- **Handling missing values** (replacing NaN values in `content` with "No Content").
+- **Dropping duplicates** based on post `URL`.
+- **Converting timestamps** from UNIX format to a human-readable datetime format.
+
 
 ```{python}
 def clean_reddit_data(df):
@@ -115,7 +127,7 @@ def preprocess_data(df):
 
 - There is a positive correlation between upvotes and comments, indicating that posts receiving more upvotes also tend to generate more discussion. This suggests that highly engaging content not only attracts approval but also encourages further conversation within the community.
 
-## **Visualization: Upvotes Distribution**
+### **(1)Visualization: Upvotes Distribution**
 
 ```{python}
 import seaborn as sns
@@ -128,7 +140,7 @@ plt.show()
 
 ![](Distribution_upvotes.png)
 
-## **Visualization: Comments Distribution**
+### **(2)Visualization: Comments Distribution**
 
 ```{python}
 import seaborn as sns
@@ -142,7 +154,7 @@ plt.show()
 ![](Distribution_comments.png)
 
 
-## **Visualization: Comments And Upvotes**
+### **(3)Visualization: Comments And Upvotes**
 
 ```{python}
 import seaborn as sns
@@ -156,7 +168,7 @@ plt.show()
 ![](comments_upvotes.png)
 
 
-## **Visualization: Correlation Heatmap**
+### **(4)Visualization: Correlation Heatmap**
 
 ```{python}
 sns.heatmap(df.corr(numeric_only=True), annot=True, cmap='coolwarm')
@@ -166,7 +178,7 @@ plt.show()
 
 ![](corr.png)
 
-## **Visualization: Upvotes over Time**
+### **(5)Visualization: Upvotes over Time**
 
 ```{python}
 import seaborn as sns
@@ -188,6 +200,7 @@ plt.show()
 ------------------------------------------------------------------------
 
 # **5. Feature Engineering**
+We engineered several new features to enhance our analysis:
 
 ## **Added Features**
 
@@ -203,25 +216,60 @@ plt.show()
 | `has_bitcoin`             | Whether "Bitcoin" appears in the title                              |
 
 ------------------------------------------------------------------------
+
+### **(6)Visualization: Engagement Score Distribution**
 ![](dist_engage.png)
+
+### **(7)Visualization: Engagement Score & Day of Week**
 ![](engage_day.png)
+
+### **(8)Visualization: Correlation Matrix of Engagement Score & Title & Content**
 ![](corr_engage.png)
 
+------------------------------------------------------------------------
 
-# **6. Conclusion & Future Work**
+# **6. Challenges & Solutions**
 
-## **Findings**
+Throughout this project, we encountered several challenges that required careful consideration:
 
-Sentiment polarity plays a crucial role in driving engagement on Reddit. Posts with a more positive sentiment tend to receive higher upvotes, suggesting that users are more likely to engage with optimistic or bullish discussions. This indicates that sentiment not only reflects market mood but also directly influences how widely content is shared and supported within the community.
+- **Data Cleaning Complexity:** The textual data contained significant noise, special characters, URLs, and inconsistencies. We developed robust cleaning functions to handle these issues effectively, including removing special characters, URLs, and filling missing values in the `content` field.
+- **Feature Engineering Complexity:** Handling the right-skewed distributions of `upvotes` and `comments` was another challenge. To address this, we applied log transformations to these features, creating `log_upvotes` and `log_comments`, which helped normalize the distributions.
+- **API Rate Limits:** We encountered rate limits when fetching large amounts of data. We solved this by implementing **request delays**.
+- **Missing Values in Content:** Some Reddit posts had missing content fields. We imputed missing values with "No Content".
+- **Feature Scaling Choice:** Log transformation was chosen for `upvotes` and `comments` because they were **highly skewed**.
+- **Collaboration and Integration:** Coordinating the efforts of multiple team members, integrating their individual contributions, and ensuring consistency across the project required careful communication and collaboration.
 
-Posts that include "Bitcoin" in the title tend to attract more upvotes, likely because Bitcoin remains the most recognized and influential cryptocurrency. This suggests that discussions explicitly mentioning Bitcoin are perceived as more relevant or valuable, drawing greater attention from the community. The effect may also be linked to algorithmic promotion, as posts with trending keywords like "Bitcoin" are more likely to be surfaced to users.
+---
 
-Engagement levels tend to be higher on weekends, possibly because users have more free time to browse and interact with cryptocurrency discussions. This pattern suggests that sentiment analysis and trading strategies could benefit from factoring in time-based trends, as increased activity during weekends may amplify sentiment-driven market reactions.
+# **7. Conclusion & Future Work**
 
-## **Next Steps**
+## **Summary of Key Findings**
 
--   NLP techniques like TF-IDF and LLM-based sentiment analysis help extract meaningful insights from Reddit discussions, identifying key terms and sentiment trends.
--   Predictive models can be built to analyze the relationship between Reddit sentiment and Bitcoin price movements, potentially aiding in market forecasting.
--   Fine-tuning LLMs for finance-specific sentiment classification can improve accuracy, making sentiment analysis more relevant for trading and investment strategies.
+- Posts mentioning **"Bitcoin"** received **more upvotes** and engagement.
+- Engagement was **higher on weekends** than weekdays.
+- There was a **strong correlation between upvotes and comments**, suggesting highly engaged posts get more interactions.
+- The sentiment of posts appears to have a **positive effect** on engagement.
 
-**This report summarizes the entire process, from data collection to analysis. The next phase will explore predictive modeling using the cleaned dataset.**
+## **Conclusion**
+
+- Sentiment polarity plays a crucial role in driving engagement on Reddit. Posts with a more positive sentiment tend to receive higher upvotes, suggesting that users are more likely to engage with optimistic or bullish discussions. This indicates that sentiment not only reflects market mood but also directly influences how widely content is shared and supported within the community.
+
+- Posts that include "Bitcoin" in the title tend to attract more upvotes, likely because Bitcoin remains the most recognized and influential cryptocurrency. This suggests that discussions explicitly mentioning Bitcoin are perceived as more relevant or valuable, drawing greater attention from the community. The effect may also be linked to algorithmic promotion, as posts with trending keywords like "Bitcoin" are more likely to be surfaced to users.
+
+- Engagement levels tend to be higher on weekends, possibly because users have more free time to browse and interact with cryptocurrency discussions. This pattern suggests that sentiment analysis and trading strategies could benefit from factoring in time-based trends, as increased activity during weekends may amplify sentiment-driven market reactions.
+
+
+## **Future Work**
+
+-   NLP techniques like **LLM-based** sentiment analysis help extract meaningful insights from Reddit discussions, identifying key terms and sentiment trends.
+-   **Predictive models** can be built to analyze the relationship between Reddit sentiment and Bitcoin price movements, potentially aiding in market forecasting.
+-   **Fine-tuning LLMs** for finance-specific sentiment classification can improve accuracy, making sentiment analysis more relevant for trading and investment strategies.
+
+# **8.Team Contributions**
+
+This project was a collaborative effort, with each member playing a crucial role in its success.
+
+- **Thomas Bordino** initiated the project by acquiring the initial dataset, performing basic data cleaning, and conducting preliminary exploratory data analysis (EDA) to understand the data's structure and characteristics.
+- **Yixin Xiao** significantly enhanced the data cleaning process, refining EDA, data preprocessing, and feature engineering, laying the groundwork for subsequent analysis.
+- **Lilly Loghmani** further refined the data preprocessing steps, completed the EDA, and played a key role in feature engineering, creating new variables to improve the analysis.
+- **Wenbo Liu** played a crucial role in finalizing the project by refining the remaining details of the initial code base and contributing across multiple elements. He took the lead in writing the README and the final report, as well as writing most of them.
